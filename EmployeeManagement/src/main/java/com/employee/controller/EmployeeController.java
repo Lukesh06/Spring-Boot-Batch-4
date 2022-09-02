@@ -2,9 +2,9 @@ package com.employee.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.employee.model.EmployeeRequestModel;
 import com.employee.model.EmployeeResponse;
-
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
+import com.employee.service.EmployeeService;
 
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
+
+	@Autowired
+	EmployeeService employeeService;
 
 	@GetMapping(value = "/details", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<EmployeeResponse> getEmployeeDetails() {
@@ -61,22 +63,12 @@ public class EmployeeController {
 	@PostMapping(value = "/create")
 	public ResponseEntity<EmployeeResponse> createEmployee(@RequestBody EmployeeRequestModel employeeRequestModel) {
 
-		EmployeeResponse employeeResponse = new EmployeeResponse();
+		EmployeeResponse employeeResponse = employeeService.saveEmployee(employeeRequestModel);
 
-		String referenceNumber = UUID.randomUUID().toString();
-		String emailId = employeeRequestModel.getFirstName().toLowerCase() + "."
-				+ employeeRequestModel.getLastName().toLowerCase() + "@gmail.com";
-		
-		employeeResponse.setEmailId(emailId);
-		employeeResponse.setEmployeeReferenceNumber(referenceNumber);
-		
-		
-		BeanUtils.copyProperties(employeeRequestModel, employeeResponse);
-		
-		ResponseEntity<EmployeeResponse> response = new ResponseEntity<EmployeeResponse>(employeeResponse, HttpStatus.CREATED);
-		
+		ResponseEntity<EmployeeResponse> response = new ResponseEntity<EmployeeResponse>(employeeResponse,
+				HttpStatus.CREATED);
+
 		return response;
-		
 
 	}
 

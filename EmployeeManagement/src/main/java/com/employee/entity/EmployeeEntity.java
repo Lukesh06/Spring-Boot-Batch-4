@@ -1,25 +1,50 @@
-package com.employee.model;
+package com.employee.entity;
 
-public class EmployeeRequestModel {
+import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Employee")
+public class EmployeeEntity implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Column(name = "EMP_ID")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int empId;
-	
+
+	@Column(name = "EMP_REFERENCE_NUMBER")
 	private String employeeReferenceNumber;
 
+	@Column(name = "FIRST_NAME")
 	private String firstName;
 
+	@Column(name = "LAST_NAME")
 	private String lastName;
 
+	@Column(name = "ADRESS")
 	private String address;
 
+	@Column(name = "CITY")
 	private String city;
 
+	@Column(name = "STATE")
 	private String state;
 
+	@Column(name = "PIN_CODE")
 	private int pinNumber;
 
+	@Column(name = "MOBILE_NUMBER")
 	private long mobileNumber;
-	
+
+	@Column(name = "EMAIL_ID")
 	private String emailId;
 
 	public int getEmpId() {
@@ -28,6 +53,14 @@ public class EmployeeRequestModel {
 
 	public void setEmpId(int empId) {
 		this.empId = empId;
+	}
+
+	public String getEmployeeReferenceNumber() {
+		return employeeReferenceNumber;
+	}
+
+	public void setEmployeeReferenceNumber(String employeeReferenceNumber) {
+		this.employeeReferenceNumber = employeeReferenceNumber;
 	}
 
 	public String getFirstName() {
@@ -70,6 +103,7 @@ public class EmployeeRequestModel {
 		this.state = state;
 	}
 
+
 	public int getPinNumber() {
 		return pinNumber;
 	}
@@ -86,14 +120,6 @@ public class EmployeeRequestModel {
 		this.mobileNumber = mobileNumber;
 	}
 
-	public String getEmployeeReferenceNumber() {
-		return employeeReferenceNumber;
-	}
-
-	public void setEmployeeReferenceNumber(String employeeReferenceNumber) {
-		this.employeeReferenceNumber = employeeReferenceNumber;
-	}
-
 	public String getEmailId() {
 		return emailId;
 	}
@@ -102,6 +128,4 @@ public class EmployeeRequestModel {
 		this.emailId = emailId;
 	}
 
-	
-	
 }
